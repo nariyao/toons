@@ -1,0 +1,32 @@
+.cardlist {
+  width: 65rem;
+  min-height: 20rem;
+  height: co;
+  border: 2px solid var(--c2);
+}
+
+.cardlist-head {
+    height: 3rem;
+    background-color: var(--c3);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+}
+.cardlist-head-title {
+    color: var(--c6);
+    font-size: 1.3rem;
+}
+.cardlist-head-btn {
+    background-color: var(--c1);
+    border-radius: 20px;
+}
+.cardlist-content {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    gap: 10px;
+    padding: 10px;
+
+}

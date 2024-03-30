@@ -1,0 +1,22 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --cf: #fff;
+  --c1: #040d12;
+  --c2: #183d3d;
+  --c3: #35503b;
+  --c4: #5c8374;
+  --c5: #cfe6d4;
+  --c6: #e6eee8;
+}
+html {
+  font-size: 16px;
+}
+body{
+  background-color: var(--c6);
+}

@@ -1,0 +1,10 @@
+.list{
+    width: max-content;
+    max-width: 90%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: auto;
+    padding: 10px;
+}

@@ -1,0 +1,21 @@
+.FullCard{
+    width: 190px;
+    background-color: var(--c3);
+    padding: 2px;
+    cursor: pointer;
+}
+
+.FullCard-img{
+    width: 100%;
+    
+}
+.FullCard-img>img{
+    width: 100%;
+    max-height: 250px;
+}
+.FullCard-text{
+    padding: 5px;
+    color: var(--c6);
+    font-size: 1.1rem;
+}
+
