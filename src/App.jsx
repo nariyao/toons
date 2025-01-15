@@ -7,7 +7,6 @@ import List from "./Pages/List";
 import ShowAnime from "./Pages/ShowAnime";
 import ShowManga from "./Pages/ShowManga";
 
-
 function App() {
   return (
     <Router>
