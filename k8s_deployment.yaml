@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: toons-deployment
+  namespace: toons-zone
+  labels:
+    app: toons-deployment
+    env: dev
+    type: front-end
+  annotations:
+    description: "This is a deployment for toons"
+    dockerfile: "Dockerfile"
+    image_name: "toons"
+    image_tag: "latest"
+    image_registry: "hub.docker.com"
+    image_url: "nariyao/toons:latest"
+    container_port: "80"
+    image_pull_policy: "Always"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: toons-pod
+  template:
+    name: toons-pod
+    metadata:
+      labels:
+        app: toons-pod
+        env: dev
+        type: front-end
+    spec:
+      containers:
+        - name: toons-container
+          image: "nariyao/toons:latest"
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"

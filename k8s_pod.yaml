@@ -2,10 +2,10 @@
 apiVersion : v1
 kind: Pod
 metadata:
-  name: toons
+  name: toons-pod
   namespace: toons-zone
   labels:
-    app: toons
+    app: toons-pod
     env: dev
     type: front-end
   annotations:
