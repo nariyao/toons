@@ -23,7 +23,6 @@ spec:
     matchLabels:
       app: toons-pod
   template:
-    name: toons-pod
     metadata:
       labels:
         app: toons-pod
