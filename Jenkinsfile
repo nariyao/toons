@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     echo 'Building docker image...'
-                    dockerImage = docker.build("${registryUri}/${registryNamespace}/${imageName}:${env.BRANCH_NAME}")
+                    dockerImage = docker.build("${registryUri}/${registryNamespace}/${imageName}:${env.BUILD_NUMBER}")
                 }
             }
         }
@@ -45,7 +45,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}
+                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registryUri}
                     """
                 }
             }
@@ -61,8 +61,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo "Deploying ${env.BRANCH_NAME} to production..."
-                echo "Completes deployment of ${env.BRANCH_NAME} to production..."
+                echo "Deploying ${env.BRANCH_NAME}-${env.BUILD_NUMBER} to production..."
+                echo "Completes deployment of ${env.env.BUILD_NUMBER} to production..."
             }
         }
     }
