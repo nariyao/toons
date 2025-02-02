@@ -4,6 +4,11 @@ pipeline {
     tools{
         nodejs '22.13.0'
     }
+    environment {
+        registryUri = "651428245008.dkr.ecr.us-east-1.amazonaws.com"
+        registryNamespace = "college"
+        imageName = "toons"         
+        }
 
     stages {
         stage('Build react app') {
@@ -14,20 +19,42 @@ pipeline {
                 sh 'vite build'
             }
         }
+        stage('Create zip file') {
+            steps {
+                echo 'Creating zip file...'
+                sh 'zip -r toons.zip dist'
+            }
+        }   
+        stage("Uploading zip to S3"){
+            steps{
+                echo 'Uploading zip to S3...'
+                sh 'aws s3 cp toons.zip s3://jenkins-artifacts-eml/toons.zip'
+                echo 'Uploaded zip to S3...'
+            }
+        }
         stage('Build docker image') {
             steps {
                 script {
                     echo 'Building docker image...'
-                    dockerImage = docker.build("nariyao/toons")
+                    dockerImage = docker.build("${registryUri}/${registryNamespace}/${imageName}:${env.BRANCH_NAME}")
+                }
+            }
+        }
+        stage('docker login') {
+            steps {
+                script {
+                    sh """
+                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}
+                    """
                 }
             }
         }
         stage('Push docker image') {
             steps {
                 script {
-                    echo 'Pushing docker image...'
-                    dockerImage.push("${env.BRANCH_NAME}")
-                    dockerImage.push('latest')
+                    echo 'Pushing docker image...' 
+                    dockerImage.push()
+                    dockerImage.push("${registryUri}/${registryNamespace}/${imageName}:latest")
                 }
             }
         }
