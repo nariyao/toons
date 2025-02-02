@@ -55,7 +55,7 @@ pipeline {
                 script {
                     echo 'Pushing docker image...' 
                     dockerImage.push()
-                    dockerImage.push("${registryUri}/${registryNamespace}/${imageName}:latest")
+                    dockerImage.push("latest")
                 }
             }
         }
