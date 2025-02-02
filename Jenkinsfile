@@ -5,6 +5,7 @@ pipeline {
         nodejs '22.13.0'
     }
     environment {
+        s3Bucket = "jenkins-artifacts-college"
         registryUri = "651428245008.dkr.ecr.us-east-1.amazonaws.com"
         registryNamespace = "college"
         imageName = "toons"         
@@ -28,7 +29,7 @@ pipeline {
         stage("Uploading zip to S3"){
             steps{
                 echo 'Uploading zip to S3...'
-                sh 'aws s3 cp toons.zip s3://jenkins-artifacts-eml/toons.zip'
+                sh "aws s3 cp toons.zip s3://${s3Bucket}/toons.zip"
                 echo 'Uploaded zip to S3...'
             }
         }
