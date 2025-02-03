@@ -1,0 +1,33 @@
+---
+apiVersion : v1
+kind: Pod
+metadata:
+  name: toons-pod
+  namespace: toons-zone
+  labels:
+    app: toons-pod
+    env: dev
+    type: front-end
+  annotations:
+    description: "This is a pod for toons"
+    dockerfile: "Dockerfile"
+    image_name: "toons"
+    image_tag: "latest"
+    image_registry: "hub.docker.com"
+    image_url: "nariyao/toons:latest"
+    container_port: "80"
+    image_pull_policy: "Always"
+spec:
+  containers:
+    - name: toons-container
+      image: "nariyao/toons:latest"
+      ports:
+        - containerPort: 80
+      resources:
+        limits:
+          memory: "512Mi"
+          cpu: "500m"
+        requests:
+          memory: "256Mi"
+          cpu: "250m"
+

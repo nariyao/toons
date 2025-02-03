@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: toons-ingress
+  namespace: toons-zone
+  labels:
+    app: toons-ingress
+    env: dev
+    type: front-end
+  annotations:
+    description: "This is an Ingress for toons"
+spec:
+  rules:
+  - host: toons.nariyao.com
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: toons-service
+              port:
+                number: 80

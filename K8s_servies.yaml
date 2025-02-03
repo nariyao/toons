@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: toons-service
+  namespace: toons-zone
+  labels:
+    app: toons-service
+    env: dev
+    type: front-end
+  annotations:
+    description: "This is a service for toons"
+spec:
+  selector:
+    app: toons-pod
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 80
+      # nodePort: 30001
+  type: LoadBalancer
