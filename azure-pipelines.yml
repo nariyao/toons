@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: Fedora-42-own-machine
+  vmImage: Nariyao-my_personal-machine-ubuntu
 
 steps:
 
