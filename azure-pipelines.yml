@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: Nariyao-my_personal-machine-ubuntu
+  name: default
 
 steps:
 
