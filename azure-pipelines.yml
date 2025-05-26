@@ -4,13 +4,34 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- main
+  branches:
+    include:
+      - main
+
 
 pool:
   name: default
 
-steps:
-
-- script: |
-    echo "Hello world"
-  displayName: 'npm install and build'
+variables:
+  - name: "containerRegistry"
+    value: "DockerHubConnection"
+  - name: "repositorUserName"
+    value: "nariyao"
+  - name: "containerImageName"
+    value: "toons"
+stages:
+  - stage: "Build"
+    displayName: "Build"
+    jobs:
+      - job: "BuildAndPushDockerImage"
+        displayName: "build and push docker image"
+        steps:
+          - task: Docker@2
+            displayName: "build and pushing docker image"
+            inputs:
+              containerRegistry: '$(containerRegistry)'
+              repository: '$(repositoryUserName)/$(containerImageName)'
+              command: buildAndPush
+              Dockerfile: '**/Dockerfile'
+              tags: |
+                $(Build.BuildId)
