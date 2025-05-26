@@ -15,7 +15,7 @@ pool:
 variables:
   - name: "containerRegistry"
     value: "DockerHubConnection"
-  - name: "repositorUserName"
+  - name: "repositoryUserName"
     value: "nariyao"
   - name: "containerImageName"
     value: "toons"
