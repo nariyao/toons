@@ -19,6 +19,8 @@ variables:
     value: "nariyao"
   - name: "containerImageName"
     value: "toons"
+  - name: "terraform"
+    value: "apply"
 stages:
   - stage: "Build"
     displayName: "Build"
@@ -35,3 +37,41 @@ stages:
               Dockerfile: '**/Dockerfile'
               tags: |
                 $(Build.BuildId)
+
+  - stage: "CreateAndDestroy"
+    displayName: "CreateAndDestroy"
+    jobs:
+      - job: "Create_AKS_Cluster"
+        condition: eq [$(terraform), "apply"]
+        displayName: "Creating AKS Cluster"
+        steps:
+          - checkout: self
+          - script: |
+              az login --service-principal --username $(servicePrincipalId) --password $(servicePrincipalPassword) --tenant $(tenantId)
+            displayName: "login Azure"
+          - script: |
+              terraform init
+              terraform apply -auto-approve
+            displayName: "apply terraform"
+      - job: "Destroy_AKS_Cluster"
+        condition: eq[$(terraform),"destroy"]
+        displayName: "Destroying"
+        steps:
+        - checkout: self
+        - script: |
+            az login --service-principal --username $(servicePrincipalId) --password $(servicePrincipalPassword) --tenant $(tenantId)
+          displayName: "login Azure"
+        - script: |
+            terraform init
+            terraform destroy -auto-approve
+          displayName: "destroy terraform"
+  - stage: "Destroy_On_AKS_Cluster"
+    condition: eq[$(terraform),"apply"]
+    displayName: "Deploying Helm Chart"
+    jobs:
+      - job: "Deploy_Helm_Chart"
+        steps:
+          - script: |
+              Helm install toons-helm ./toons-helm
+            displayName: "Deploy Helm Chart"
+            
